@@ -17,34 +17,38 @@ const caesarCipher = (str, shift = 0) => {
   const maybeUpperCase = (result, before, after) =>
     before === after ? result : result.toUpperCase();
 
-  // create range array
-  let alphabet = createAlphabet();
+  const encrypt = (str, shift) => {
+    // create range array
+    let alphabet = createAlphabet();
 
-  // init string
-  let cipher = "";
+    // init string
+    let cipher = "";
 
-  /**
-   * Loop original string, convert each character to lowercase to compare with array
-   * if the return fo adding the shift to the index of the alaphabet array is undefined return a space
-   * else return the new character
-   */
-  cipher += str
-    .split("")
-    .map((char) => {
-      let _char = char.toLowerCase();
-      let newChar = alphabet[alphabet.indexOf(_char)];
+    /**
+     * Loop original string, convert each character to lowercase to compare with array
+     * if the return fo adding the shift to the index of the alaphabet array is undefined return a space
+     * else return the new character
+     */
+    cipher += str
+      .split("")
+      .map((char) => {
+        let _char = char.toLowerCase();
+        let newChar = alphabet[alphabet.indexOf(_char)];
 
-      return typeof newChar !== "undefined"
-        ? maybeUpperCase(
-            alphabet[(alphabet.indexOf(_char) + shift) % alphabet.length],
-            char,
-            _char
-          )
-        : " ";
-    })
-    .join("");
+        return typeof newChar !== "undefined"
+          ? maybeUpperCase(
+              alphabet[(alphabet.indexOf(_char) + shift) % alphabet.length],
+              char,
+              _char
+            )
+          : " ";
+      })
+      .join("");
 
-  return cipher;
+    return cipher;
+  };
+
+  return { createAlphabet, maybeUpperCase, encrypt };
 };
 
 export default caesarCipher;
